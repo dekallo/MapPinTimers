@@ -1,0 +1,4 @@
+manual-changelog: CHANGES.txt
+
+optional-dependencies:
+    - 413341-unlimited-map-pin-distance

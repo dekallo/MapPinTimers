@@ -1,16 +1,16 @@
 local superTrackedFrame = _G["SuperTrackedFrame"]
-local timeText = superTrackedFrame:CreateFontString("TimeText", "BACKGROUND", "GameFontNormal")
-timeText:SetJustifyV("TOP")
-timeText:SetSize(0, 20)
-timeText:SetPoint("TOP", superTrackedFrame.Icon, "BOTTOM", 0, -22)
+superTrackedFrame.TimeText = superTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
+superTrackedFrame.TimeText:SetJustifyV("TOP")
+superTrackedFrame.TimeText:SetSize(0, 20)
+superTrackedFrame.TimeText:SetPoint("TOP", superTrackedFrame.Icon, "BOTTOM", 0, -22)
+
+-- TODO: can we autotrack new pins?
 
 -- this should be user configurable eventually
 local fullAlpha = true
 
--- TODO: can we autotrack new pins?
-
 -- override frame alpha to full opacity so the timer is useful
-local oldAlpha = SuperTrackedFrame.GetTargetAlphaBaseValue
+local oldAlpha = superTrackedFrame.GetTargetAlphaBaseValue
 function SuperTrackedFrame:GetTargetAlphaBaseValue()
   return fullAlpha and 1 or oldAlpha(self)
 end
@@ -31,10 +31,10 @@ local function UpdateDistanceTextWithTimer(self, elapsed)
         
         if speed > 0 then 
           local time = abs(distance / speed)
-          timeText:SetText(TIMER_MINUTES_DISPLAY:format(floor(time / 60), floor(time % 60)))
-          timeText:SetShown(true)
+          self.TimeText:SetText(TIMER_MINUTES_DISPLAY:format(floor(time / 60), floor(time % 60)))
+          self.TimeText:SetShown(true)
         else
-          timeText:SetShown(false)
+          self.TimeText:SetShown(false)
         end
 
         throttle = 0
@@ -42,7 +42,7 @@ local function UpdateDistanceTextWithTimer(self, elapsed)
 
       self.DistanceText:SetText(IN_GAME_NAVIGATION_RANGE:format(Round(distance)))
     else
-      timeText:SetShown(false)
+      self.TimeText:SetShown(false)
       lastDistance = nil
   end
 end
@@ -62,5 +62,4 @@ local function OnUpdateTimer(self, elapsed)
     self:UpdateAlpha()
   end
 end
-
 superTrackedFrame:SetScript("OnUpdate", OnUpdateTimer)

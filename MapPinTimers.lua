@@ -2,8 +2,18 @@ local superTrackedFrame = _G["SuperTrackedFrame"]
 local timeText = superTrackedFrame:CreateFontString("TimeText", "BACKGROUND", "GameFontNormal")
 timeText:SetJustifyV("TOP")
 timeText:SetSize(0, 20)
-timeText:SetIgnoreParentAlpha(true)
 timeText:SetPoint("TOP", superTrackedFrame.Icon, "BOTTOM", 0, -22)
+
+-- this should be user configurable eventually
+local fullAlpha = true
+
+-- TODO: can we autotrack new pins?
+
+-- override frame alpha to full opacity so the timer is useful
+local oldAlpha = SuperTrackedFrame.GetTargetAlphaBaseValue
+function SuperTrackedFrame:GetTargetAlphaBaseValue()
+  return fullAlpha and 1 or oldAlpha(self)
+end
 
 -- replaces UpdateDistanceText from Blizzard_QuestNavigation/SuperTrackedFrame.lua
 local throttle = 0
@@ -50,10 +60,6 @@ local function OnUpdateTimer(self, elapsed)
     UpdateDistanceTextWithTimer(self, elapsed)
     
     self:UpdateAlpha()
-
-    -- this needs to be called in a weird way to work with both the original mixin
-    -- and when UnlimitedMapPinDistance is overriding this function
-    timeText:SetAlpha(SuperTrackedFrameMixin.GetTargetAlpha(self))
   end
 end
 

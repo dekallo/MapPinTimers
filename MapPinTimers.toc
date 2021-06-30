@@ -1,5 +1,5 @@
-## Interface: 90005
-## Version: 4
+## Interface: 90100
+## Version: 5
 ## Author: dekallo
 ## Title: Map Pin Timers
 ## Notes: Adds a timer to Blizzard Map Pins showing time to arrival

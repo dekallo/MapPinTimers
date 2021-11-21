@@ -1,9 +1,11 @@
 ## Interface: 90105
-## Version: 6
+## Version: @project-version@
 ## Author: dekallo
 ## Title: Map Pin Timers
 ## Notes: Adds a timer to Blizzard Map Pins showing time to arrival
 ## Dependencies: Blizzard_QuestNavigation
 ## OptionalDeps: UnlimitedMapPinDistance
+## X-Curse-Project-ID: 421901
+## X-Wago-ID: WqKQDa6x
 
 MapPinTimers.lua

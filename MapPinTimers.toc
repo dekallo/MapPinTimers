@@ -7,5 +7,6 @@
 ## OptionalDeps: UnlimitedMapPinDistance
 ## X-Curse-Project-ID: 421901
 ## X-Wago-ID: WqKQDa6x
+## X-WoWI-ID: 26181
 
 MapPinTimers.lua

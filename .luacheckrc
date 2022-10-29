@@ -4,6 +4,7 @@ codes = true
 exclude_files = {
 }
 ignore = {
+	"212/self"
 }
 globals = {
     "C_Map",

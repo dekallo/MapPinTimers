@@ -6,11 +6,15 @@ exclude_files = {
 ignore = {
 }
 globals = {
-    "SuperTrackedFrame",
+    "C_Map",
     "C_Navigation",
+    "C_SuperTrack",
+    "C_Timer",
+    "CreateFrame",
     "abs",
-    "Round",
     "floor",
+    "Round",
+    "SuperTrackedFrame",
     "IN_GAME_NAVIGATION_RANGE",
     "TIMER_MINUTES_DISPLAY"
 }

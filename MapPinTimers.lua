@@ -1,4 +1,7 @@
-local superTrackedFrame = _G["SuperTrackedFrame"]
+-- globals
+local superTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
+
+-- anchor time text
 superTrackedFrame.TimeText = superTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
 superTrackedFrame.TimeText:SetJustifyV("TOP")
 superTrackedFrame.TimeText:SetSize(0, 20)
@@ -28,8 +31,8 @@ local function UpdateDistanceTextWithTimer(self, elapsed)
       if throttle >= .5 then
         local speed = lastDistance and ((lastDistance - distance) / throttle) or 0
         lastDistance = distance
-        
-        if speed > 0 then 
+
+        if speed > 0 then
           local time = abs(distance / speed)
           self.TimeText:SetText(TIMER_MINUTES_DISPLAY:format(floor(time / 60), floor(time % 60)))
           self.TimeText:SetShown(true)
@@ -55,10 +58,10 @@ local function OnUpdateTimer(self, elapsed)
     self:UpdateClampedState()
     self:UpdatePosition()
     self:UpdateArrow()
-    
+
     -- this replaces the original self:UpdateDistanceText
     UpdateDistanceTextWithTimer(self, elapsed)
-    
+
     self:UpdateAlpha()
   end
 end

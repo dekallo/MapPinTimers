@@ -1,11 +1,11 @@
 -- globals
-local superTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
+local SuperTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, C_Navigation, abs, floor, Round, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
 
 -- anchor time text
-superTrackedFrame.TimeText = superTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
-superTrackedFrame.TimeText:SetJustifyV("TOP")
-superTrackedFrame.TimeText:SetSize(0, 20)
-superTrackedFrame.TimeText:SetPoint("TOP", superTrackedFrame.Icon, "BOTTOM", 0, -22)
+SuperTrackedFrame.TimeText = SuperTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
+SuperTrackedFrame.TimeText:SetJustifyV("TOP")
+SuperTrackedFrame.TimeText:SetSize(0, 20)
+SuperTrackedFrame.TimeText:SetPoint("TOP", SuperTrackedFrame.Icon, "BOTTOM", 0, -22)
 
 -- TODO: can we autotrack new pins?
 
@@ -13,7 +13,7 @@ superTrackedFrame.TimeText:SetPoint("TOP", superTrackedFrame.Icon, "BOTTOM", 0, 
 local fullAlpha = true
 
 -- override frame alpha to full opacity so the timer is useful
-local oldAlpha = superTrackedFrame.GetTargetAlphaBaseValue
+local oldAlpha = SuperTrackedFrame.GetTargetAlphaBaseValue
 function SuperTrackedFrame:GetTargetAlphaBaseValue()
   return fullAlpha and 1 or oldAlpha(self)
 end
@@ -65,4 +65,4 @@ local function OnUpdateTimer(self, elapsed)
     self:UpdateAlpha()
   end
 end
-superTrackedFrame:SetScript("OnUpdate", OnUpdateTimer)
+SuperTrackedFrame:SetScript("OnUpdate", OnUpdateTimer)

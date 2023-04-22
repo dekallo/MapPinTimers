@@ -5,6 +5,8 @@
 ## Notes: Adds a timer to Blizzard Map Pins showing time to arrival
 ## Dependencies: Blizzard_QuestNavigation
 ## OptionalDeps: UnlimitedMapPinDistance
+## IconTexture: Interface\AddOns\MapPinTimers\icon
+## X-Website: https://www.curseforge.com/wow/addons/map-pin-timers
 ## X-Curse-Project-ID: 421901
 ## X-Wago-ID: WqKQDa6x
 ## X-WoWI-ID: 26181

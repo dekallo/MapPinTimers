@@ -1,12 +1,11 @@
 td = "lua51"
 max_line_length = false
 codes = true
-exclude_files = {
-}
 ignore = {
 	"212/self"
 }
 globals = {
+    "AbbreviateNumbers",
     "C_Map",
     "C_Navigation",
     "C_SuperTrack",

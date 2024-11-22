@@ -38,6 +38,13 @@ end
 
 -- replaces UpdateDistanceText from Blizzard_QuestNavigation/SuperTrackedFrame.lua
 do
+	local function GetDistanceString(distance)
+		if distance < 1000 then
+			return tostring(distance)
+		else
+			return AbbreviateNumbers(distance)
+		end
+	end
 	local throttle = 0
 	local lastDistance = nil
 	local function UpdateDistanceTextWithTimer(self, elapsed)
@@ -57,7 +64,7 @@ do
 				end
 				throttle = 0
 			end
-			self.DistanceText:SetText(IN_GAME_NAVIGATION_RANGE:format(Round(distance)))
+			self.DistanceText:SetText(IN_GAME_NAVIGATION_RANGE:format(GetDistanceString(Round(distance))))
 		else
 			self.TimeText:SetShown(false)
 			lastDistance = nil

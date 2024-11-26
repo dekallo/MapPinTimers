@@ -1,6 +1,6 @@
 -- globals
 local C_Map, C_Navigation, C_SuperTrack, C_Timer = C_Map, C_Navigation, C_SuperTrack, C_Timer
-local abs, floor, Round, CreateFrame = abs, floor, Round, CreateFrame
+local abs, floor, Round, CreateFrame, AbbreviateNumbers = abs, floor, Round, CreateFrame, AbbreviateNumbers
 local SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
 
 -- locals

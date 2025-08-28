@@ -8,6 +8,7 @@ globals = {
     "AbbreviateNumbers",
     "C_Map",
     "C_Navigation",
+    "C_QuestLog",
     "C_SuperTrack",
     "C_Timer",
     "CreateFrame",

@@ -3,14 +3,27 @@ local C_Map, C_Navigation, C_SuperTrack, C_Timer = C_Map, C_Navigation, C_SuperT
 local abs, floor, Round, CreateFrame, AbbreviateNumbers = abs, floor, Round, CreateFrame, AbbreviateNumbers
 local SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
 
--- locals
-local fullAlpha = true -- this should be user configurable eventually
-
 -- set up event frame
-local eventFrame = CreateFrame("Frame")
-eventFrame:SetScript('OnEvent', function(self, event, ...)
-	if self[event] then return self[event](...) end
+local EventFrame = CreateFrame("Frame")
+EventFrame:SetScript("OnEvent", function(self, event, ...)
+	if self[event] then return self[event](self, event, ...) end
 end)
+
+function EventFrame:PLAYER_LOGIN(event)
+	self:UnregisterEvent(event)
+	-- set up and validate db
+	if not MapPinTimersDB then
+		MapPinTimersDB = {}
+	end
+	if type(MapPinTimersDB.fullAlpha) ~= "boolean" then
+		MapPinTimersDB.fullAlpha = true
+	end
+	if type(MapPinTimersDB.showDestination) ~= "boolean" then
+		MapPinTimersDB.showDestination = true
+	end
+	EventFrame:SUPER_TRACKING_CHANGED()
+end
+EventFrame:RegisterEvent("PLAYER_LOGIN")
 
 -- anchor time text
 SuperTrackedFrame.TimeText = SuperTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
@@ -25,18 +38,20 @@ SuperTrackedFrame.DestinationText:SetSize(0, 20)
 SuperTrackedFrame.DestinationText:SetPoint("TOP", SuperTrackedFrame.Icon, "TOP", 0, 22)
 
 -- auto-track new map pins
-function eventFrame:USER_WAYPOINT_UPDATED()
+function EventFrame:USER_WAYPOINT_UPDATED()
 	if C_Map.HasUserWaypoint() then
 		C_Timer.After(0, function()
 			C_SuperTrack.SetSuperTrackedUserWaypoint(true)
 		end)
 	end
 end
-eventFrame:RegisterEvent("USER_WAYPOINT_UPDATED")
+EventFrame:RegisterEvent("USER_WAYPOINT_UPDATED")
 
 -- update destination text
-function eventFrame:SUPER_TRACKING_CHANGED()
-	if C_SuperTrack.IsSuperTrackingContent() then
+function EventFrame:SUPER_TRACKING_CHANGED()
+	if not MapPinTimersDB.showDestination then
+		SuperTrackedFrame.DestinationText:SetText("")
+	elseif C_SuperTrack.IsSuperTrackingContent() then
 		local pinType = C_SuperTrack.GetSuperTrackedContent() -- TODO 2nd return?
 		if pinType == 0 then -- Enum.ContentTrackingType.Appearance
 			SuperTrackedFrame.DestinationText:SetText("Content: Appearance")
@@ -77,14 +92,13 @@ function eventFrame:SUPER_TRACKING_CHANGED()
 		SuperTrackedFrame.DestinationText:SetText("Other")
 	end
 end
-eventFrame:RegisterEvent("SUPER_TRACKING_CHANGED")
-eventFrame:SUPER_TRACKING_CHANGED()
+EventFrame:RegisterEvent("SUPER_TRACKING_CHANGED")
 
 -- override frame alpha to full opacity so the timer is useful
 do
 	local oldAlpha = SuperTrackedFrame.GetTargetAlphaBaseValue
 	function SuperTrackedFrame:GetTargetAlphaBaseValue()
-		return fullAlpha and 1 or oldAlpha(self)
+		return MapPinTimersDB.fullAlpha and 1 or oldAlpha(self)
 	end
 end
 

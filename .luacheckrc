@@ -5,17 +5,18 @@ ignore = {
 	"212/self"
 }
 globals = {
-    "AbbreviateNumbers",
-    "C_Map",
-    "C_Navigation",
-    "C_QuestLog",
-    "C_SuperTrack",
-    "C_Timer",
-    "CreateFrame",
-    "abs",
-    "floor",
-    "Round",
-    "SuperTrackedFrame",
-    "IN_GAME_NAVIGATION_RANGE",
-    "TIMER_MINUTES_DISPLAY"
+	"AbbreviateNumbers",
+	"abs",
+	"C_Map",
+	"C_Navigation",
+	"C_QuestLog",
+	"C_SuperTrack",
+	"C_Timer",
+	"CreateFrame",
+	"floor",
+	"IN_GAME_NAVIGATION_RANGE",
+	"MapPinTimersDB",
+	"Round",
+	"SuperTrackedFrame",
+	"TIMER_MINUTES_DISPLAY"
 }

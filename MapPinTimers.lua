@@ -1,3 +1,5 @@
+local addonName, MapPinTimers = ...
+
 -- globals
 local C_Map, C_Navigation, C_SuperTrack, C_Timer = C_Map, C_Navigation, C_SuperTrack, C_Timer
 local abs, floor, Round, CreateFrame, AbbreviateNumbers = abs, floor, Round, CreateFrame, AbbreviateNumbers
@@ -9,9 +11,13 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
 	if self[event] then return self[event](self, event, ...) end
 end)
 
+function MapPinTimers:AddMessage(message)
+	DEFAULT_CHAT_FRAME:AddMessage(("|cFF00FF98MapPinTimers:|r %s"):format(message))
+end
+
+-- set up and validate db, init
 function EventFrame:PLAYER_LOGIN(event)
 	self:UnregisterEvent(event)
-	-- set up and validate db
 	if not MapPinTimersDB then
 		MapPinTimersDB = {}
 	end
@@ -21,9 +27,32 @@ function EventFrame:PLAYER_LOGIN(event)
 	if type(MapPinTimersDB.showDestination) ~= "boolean" then
 		MapPinTimersDB.showDestination = true
 	end
-	EventFrame:SUPER_TRACKING_CHANGED()
+	self:SUPER_TRACKING_CHANGED()
 end
 EventFrame:RegisterEvent("PLAYER_LOGIN")
+
+-- register slash commands
+function EventFrame:ADDON_LOADED(event, loadedAddon)
+	if loadedAddon ~= addonName then
+		return
+	end
+	self:UnregisterEvent(event)
+	SlashCmdList.MapPinTimers = function(text)
+		if text == "fullAlpha" then
+			MapPinTimersDB.fullAlpha = not MapPinTimersDB.fullAlpha
+			MapPinTimers:AddMessage("fullAlpha: "..(MapPinTimersDB.fullAlpha and "true" or "false"))
+		elseif text == "showDestination" then
+			MapPinTimersDB.showDestination = not MapPinTimersDB.showDestination
+			MapPinTimers:AddMessage("showDestination: "..(MapPinTimersDB.showDestination and "true" or "false"))
+			self:SUPER_TRACKING_CHANGED()
+		else
+			MapPinTimers:AddMessage("/mpt [fullAlpha|showDestination]")
+		end
+	end
+	SLASH_MapPinTimers1 = "/mpt"
+	SLASH_MapPinTimers2 = "/mappintimers"
+end
+EventFrame:RegisterEvent("ADDON_LOADED")
 
 -- anchor time text
 SuperTrackedFrame.TimeText = SuperTrackedFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")

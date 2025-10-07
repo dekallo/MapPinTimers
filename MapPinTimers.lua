@@ -114,26 +114,21 @@ do
 	local throttle = 0
 	local lastDistance = nil
 	local function UpdateDistanceTextWithTimer(self, elapsed)
-		self.DistanceText:SetShown(not self.isClamped)
-		if not self.isClamped then
-			local distance = C_Navigation.GetDistance()
-			throttle = throttle + elapsed
-			if throttle >= .5 then
-				local speed = lastDistance and ((lastDistance - distance) / throttle) or 0
-				lastDistance = distance
-				if speed > 0 then
-					local time = abs(distance / speed)
-					self.TimeText:SetText(TIMER_MINUTES_DISPLAY:format(floor(time / 60), floor(time % 60)))
-					self.TimeText:SetShown(true)
-				else
-					self.TimeText:SetShown(false)
-				end
-				throttle = 0
+		local distance = C_Navigation.GetDistance()
+		self.DistanceText:SetShown(true)
+		self.DistanceText:SetText(IN_GAME_NAVIGATION_RANGE:format(GetDistanceString(Round(distance))))
+		throttle = throttle + elapsed
+		if throttle >= .5 then
+			local speed = lastDistance and ((lastDistance - distance) / throttle) or 0
+			lastDistance = distance
+			if speed > 0 then
+				local time = abs(distance / speed)
+				self.TimeText:SetText(TIMER_MINUTES_DISPLAY:format(floor(time / 60), floor(time % 60)))
+				self.TimeText:SetShown(true)
+			else
+				self.TimeText:SetShown(false)
 			end
-			self.DistanceText:SetText(IN_GAME_NAVIGATION_RANGE:format(GetDistanceString(Round(distance))))
-		else
-			self.TimeText:SetShown(false)
-			lastDistance = nil
+			throttle = 0
 		end
 	end
 

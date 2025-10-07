@@ -3,7 +3,7 @@ local addonName, MapPinTimers = ...
 -- globals
 local C_Map, C_Navigation, C_SuperTrack, C_Timer = C_Map, C_Navigation, C_SuperTrack, C_Timer
 local abs, floor, Round, CreateFrame, AbbreviateNumbers = abs, floor, Round, CreateFrame, AbbreviateNumbers
-local SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE = SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE
+local SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE, DEFAULT_CHAT_FRAME = SuperTrackedFrame, TIMER_MINUTES_DISPLAY, IN_GAME_NAVIGATION_RANGE, DEFAULT_CHAT_FRAME
 
 -- set up event frame
 local EventFrame = CreateFrame("Frame")
